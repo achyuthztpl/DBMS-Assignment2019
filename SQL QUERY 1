@@ -1,0 +1,60 @@
+1. SELECT title 
+FROM   film f 
+       JOIN film_category fc 
+         ON f.film_id = fc.film_id 
+WHERE  category_id IN (SELECT category_id 
+                       FROM   category 
+                       WHERE  NAME = 'comedy') 
+       AND rating = 'PG-13'; 
+
+2. SELECT title, category.name , count(rental_id)
+FROM   film
+       JOIN inventory USING( `film_id`)
+	   JOIN film_category USING( `film_id`)
+	   JOIN category USING (`category_id`)
+	   JOIN rental USING(`inventory_id`)
+WHERE  category.name = 'horror'
+GROUP BY film.film_id
+ORDER BY count(rental_id) desc limit 3;
+
+3. SELECT DISTINCT customer.*, 
+                country.country, 
+                category.name 
+FROM   inventory
+       JOIN film USING( `film_id`) 
+       JOIN film_category USING (`film_id`) 
+       JOIN category USING (`category_id`) 
+       JOIN rental USING ( `inventory_id` ) 
+       JOIN customer USING( `customer_id`) 
+       JOIN address USING ( `address_id`) 
+       JOIN city USING (`city_id`) 
+       JOIN country USING (`country_id`) 
+WHERE  country = 'India' 
+       AND category.name = 'Sports';
+
+4. SELECT DISTINCT customer.*, 
+                country.country, 
+                actor.first_name,
+                actor.last_name
+FROM   inventory
+       JOIN film USING( `film_id`) 
+       JOIN film_actor USING (`film_id`) 
+       JOIN actor USING (`actor_id`) 
+       JOIN rental USING ( `inventory_id` ) 
+       JOIN customer USING( `customer_id`) 
+       JOIN address USING ( `address_id`) 
+       JOIN city USING (`city_id`) 
+       JOIN country USING (`country_id`) 
+WHERE  country = 'Canada' 
+       AND actor.first_name = 'NICK'
+       AND actor.last_name = 'WAHLBERG'; 
+
+5. SELECT COUNT(title) AS no_of_movies, first_name, last_name
+FROM   film
+       JOIN film_actor USING( `film_id`)
+       JOIN actor USING (`actor_id`) 
+WHERE  actor.first_name = 'SEAN'
+       AND actor.last_name = 'WILLIAMS';
+
+
+

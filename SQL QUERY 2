@@ -1,0 +1,57 @@
+1. SELECT COUNT(*), category.name
+FROM   film
+       JOIN film_category USING( `film_id`)
+       JOIN category USING (`category_id`) 
+WHERE  category.name = 'documentary'
+	   AND film.special_features like '%deleted Scenes%';
+
+
+2. SELECT count(distinct film.film_id)
+FROM   inventory i
+       JOIN film
+         USING( `film_id`)
+	   JOIN film_category
+         USING (`film_id`)
+	   JOIN category
+         USING (`category_id`)
+       JOIN store 
+         USING (`store_id`)
+	   JOIN staff
+         ON staff.staff_id = store.manager_staff_id
+WHERE category.name = 'Sci-Fi' AND staff.first_name = 'Jon' and staff.last_name = 'Stephens';
+
+
+3. SELECT sum(amount)
+FROM   inventory
+       JOIN film
+         USING( `film_id`)
+	   JOIN film_category
+         USING (`film_id`)
+	   JOIN category
+         USING (`category_id`)
+	   JOIN rental
+         USING(`inventory_id`)
+	   JOIN payment
+         USING(`rental_id`)
+WHERE category.name = 'animation';
+
+
+4. SELECT count(rental.rental_id) AS no_of_rentals, category.name
+FROM   film
+       JOIN inventory USING( `film_id`)
+	   JOIN film_category USING( `film_id`)
+	   JOIN category USING (`category_id`)
+	   JOIN rental USING(`inventory_id`)
+       JOIN customer USING(`customer_id`)
+WHERE customer.first_name = 'PATRICIA' AND customer.last_name = 'JOHNSON'
+GROUP BY category.name
+ORDER BY no_of_rentals DESC
+LIMIT 3;
+
+
+5. SELECT count(rental.rental_id) AS no_of_rentals
+FROM   film
+       JOIN inventory USING( `film_id`)
+	   JOIN rental USING(`inventory_id`)
+       JOIN customer USING(`customer_id`)
+WHERE customer.first_name = 'SUSAN' AND customer.last_name = 'WILSON' AND  rating = 'R';
