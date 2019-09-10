@@ -14,10 +14,10 @@ FROM   inventory i
          USING (`film_id`)
 	   JOIN category
          USING (`category_id`)
-       JOIN store 
-         USING (`store_id`)
+       JOIN rental 
+         USING (`inventory_id`)
 	   JOIN staff
-         ON staff.staff_id = store.manager_staff_id
+         USING(`staff_id`)
 WHERE category.name = 'Sci-Fi' AND staff.first_name = 'Jon' and staff.last_name = 'Stephens';
 
 

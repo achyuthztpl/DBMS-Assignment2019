@@ -20,8 +20,7 @@ ORDER BY count(rental_id) desc limit 3;
 3. SELECT DISTINCT customer.*, 
                 country.country, 
                 category.name 
-FROM   inventory
-       JOIN film USING( `film_id`) 
+FROM   inventory  
        JOIN film_category USING (`film_id`) 
        JOIN category USING (`category_id`) 
        JOIN rental USING ( `inventory_id` ) 
@@ -36,8 +35,7 @@ WHERE  country = 'India'
                 country.country, 
                 actor.first_name,
                 actor.last_name
-FROM   inventory
-       JOIN film USING( `film_id`) 
+FROM   inventory 
        JOIN film_actor USING (`film_id`) 
        JOIN actor USING (`actor_id`) 
        JOIN rental USING ( `inventory_id` ) 
